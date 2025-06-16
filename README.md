@@ -1,210 +1,112 @@
-# Spring Cloud Netflix Boilerplate
+Este repositório organiza e referencia os principais projetos que compõem uma arquitetura baseada em Spring Cloud Netflix.
 
-Este repositório fornece uma base sólida para iniciar projetos com microserviços usando **Spring Cloud Netflix**. Os módulos aqui apresentados implementam os componentes centrais de uma arquitetura distribuída: *Service Discovery*, *Centralized Configuration*, *API Gateway* e *Autenticação OAuth2*.
+## 🔗 Repositórios Individuais
 
-## 📦 Módulos Inclusos
+- 🔐 [Auth Server (OAuth2 / JWT)](https://github.com/marcellopedrosa/auth-server)
+- 🌐 [API Gateway (Spring Cloud Gateway)](https://github.com/marcellopedrosa/api-gateway)
+- 🧭 [Eureka Server (Service Discovery)](https://github.com/marcellopedrosa/eureka-server)
+- 🛠️ [Config Server (Centralização de Configs)](https://github.com/marcellopedrosa/config-server)
 
-### 1. 🧭 eureka-server
+Cada repositório contém sua própria documentação com instruções detalhadas de uso e configuração.
 
-**Descrição:**  
-O *Eureka Server* atua como um **registry** (registro de serviços). Todos os microserviços clientes se registram nele e podem descobrir outros serviços registrados para comunicação entre si.
+## 📌 Sobre
 
-**Responsabilidades:**
-- Registro de instâncias de microserviços (Service Registry).
-- Atualizações periódicas (heartbeats) dos serviços registrados.
-- Remoção automática de instâncias inativas.
+Este projeto foi criado para fornecer uma base sólida e escalável para o desenvolvimento de microsserviços utilizando o ecossistema do Spring Cloud.
+""",
 
-**Dependência principal:**
-```xml
-<dependency>
-  <groupId>org.springframework.cloud</groupId>
-  <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-</dependency>
-```
+    "auth-server/README.md": """# Auth Server - Spring Authorization Server
 
-**Anotação necessária no main:**
-```java
-@EnableEurekaServer
-```
+Este projeto implementa um servidor de autenticação OAuth2 usando **Spring Authorization Server**, responsável pela emissão e validação de tokens JWT.
 
-> ✅ **Não adicione autenticação ao `eureka-server`**. Ele deve ser acessível livremente na rede interna entre os serviços.
+## 🔐 Funcionalidades
 
----
+- Emissão de tokens OAuth2 (Password, Client Credentials, Authorization Code).
+- Endpoints para descoberta e chave pública (JWK).
+- Integração com banco de dados para autenticação de usuários.
+- Pode ser usado com o API Gateway para validação de tokens.
 
-### 2. 🛠️ config-server
+## 🚫 Importante
 
-**Descrição:**  
-Responsável por centralizar os arquivos de configuração dos microserviços. As configurações podem ser armazenadas em um repositório Git, tornando-as versionadas e seguras.
+- **Não deve estar atrás do API Gateway.**
+- **Não deve ter rota registrada no API Gateway.**
+- Deve ser acessível diretamente por apps frontend ou serviços confiáveis.
 
-**Responsabilidades:**
-- Servir arquivos de configuração para os clientes via HTTP.
-- Suporte a perfis (`dev`, `prod`, etc.).
-- Recarregamento automático (quando combinado com Spring Cloud Bus).
+## 🧭 Requisitos
 
-**Dependência principal:**
-```xml
-<dependency>
-  <groupId>org.springframework.cloud</groupId>
-  <artifactId>spring-cloud-config-server</artifactId>
-</dependency>
-```
+- Java 17+
+- Spring Boot 3.1+
+- Maven 3.9+
 
-**Anotação necessária no main:**
-```java
-@EnableConfigServer
-```
+Consulte o [repositório](https://github.com/marcellopedrosa/auth-server) para detalhes de configuração.
+""",
 
-**Exemplo de estrutura de repositório remoto (Git):**
-```
-configs/
-├── ms-cliente-dev.yml
-├── ms-cliente-prod.yml
-├── ms-pagamento-dev.yml
-└── application.yml
-```
+    "api-gateway/README.md": """# API Gateway - Spring Cloud Gateway
 
----
+Este projeto atua como o ponto de entrada da arquitetura de microsserviços, utilizando **Spring Cloud Gateway**.
 
-### 3. 🌐 api-gateway
+## 🌐 Funcionalidades
 
-**Descrição:**  
-O *API Gateway* atua como ponto de entrada único para os microserviços. Ele lida com roteamento, balanceamento de carga, segurança e logging centralizado.
+- Roteamento dinâmico com base em URI.
+- Integração com Eureka para descoberta de serviços.
+- Validação de segurança com JWT (Auth Server externo).
+- Suporte a filtros de autenticação e logging.
 
-**Responsabilidades:**
-- Roteamento dinâmico baseado em URIs.
-- Balanceamento de carga via **Eureka**.
-- Suporte a filtros (pré e pós-processamento).
-- Integração com OAuth2 / JWT para segurança.
+## ⚠️ Restrições
 
-**Dependência principal:**
-```xml
-<dependency>
-  <groupId>org.springframework.cloud</groupId>
-  <artifactId>spring-cloud-starter-gateway</artifactId>
-</dependency>
-```
+- **Não deve expor o `auth-server`.**
+- Deve validar tokens emitidos pelo Auth Server.
+- A segurança deve ser configurada com filtros globais ou por rota.
 
-**Exemplo de configuração (`application.yml`):**
-```yaml
-spring:
-  cloud:
-    gateway:
-      routes:
-        - id: ms-cliente
-          uri: lb://ms-cliente
-          predicates:
-            - Path=/clientes/**
-        - id: ms-pagamento
-          uri: lb://ms-pagamento
-          predicates:
-            - Path=/pagamentos/**
-```
+## 🧭 Requisitos
 
-> ❌ **Não adicione rota para o `auth-server` no gateway.**
+- Java 17+
+- Spring Boot 3.1+
+- Spring Cloud Gateway
+- Maven 3.9+
 
----
+Mais informações: [repositório](https://github.com/marcellopedrosa/api-gateway)
+""",
 
-### 4. 🔐 auth-server
+    "eureka-server/README.md": """# Eureka Server - Service Discovery
 
-**Descrição:**  
-Responsável pela autenticação e emissão de tokens JWT usando **OAuth2 Authorization Server**. Permite que os microserviços se autentiquem via API Gateway e forneçam segurança baseada em token.
+Este projeto implementa um servidor de descoberta de serviços com **Spring Cloud Netflix Eureka**.
 
-**Responsabilidades:**
-- Autenticar usuários e clientes.
-- Emitir e validar tokens JWT.
-- Integrar com banco de dados ou LDAP (opcional).
+## 🧭 Funcionalidades
 
-**Dependência principal (Spring Authorization Server):**
-```xml
-<dependency>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
-</dependency>
-```
+- Registro de instâncias de microserviços.
+- Descoberta de serviços para comunicação entre eles.
+- Painel web para visualização das instâncias registradas.
 
-**Exemplo de endpoints:**
-- `/oauth2/token`: emissão de tokens.
-- `/oauth2/jwks`: chaves públicas para validação.
+## 🔐 Segurança
 
-**Exemplo de configuração básica:**
-```yaml
-spring:
-  security:
-    oauth2:
-      authorizationserver:
-        issuer: http://localhost:9000
-```
+- **Não adicionar autenticação ou segurança.**
+- Deve ser acessado livremente pelos microserviços da rede interna.
+- **Não expor via API Gateway.**
 
-> 🔐 **Deve ser acessado diretamente pelos clientes front-end ou trusted services, sem passar pelo `api-gateway`.**
+## 🧭 Requisitos
 
----
+- Java 17+
+- Spring Boot 3.1+
+- Maven 3.9+
 
-## 📚 Pré-requisitos
+Veja o projeto em: [repositório](https://github.com/marcellopedrosa/eureka-server)
+""",
 
-- Java 17+ (ou 21 se preferir)
-- Spring Boot 3.1+ ou 3.5+ (compatível com Spring Cloud 2025.x)
-- Maven 3.9.x
-- Git (para versionamento remoto das configs)
+    "config-server/README.md": """# Config Server - Centralização de Configurações
 
----
+Este projeto fornece configuração centralizada para todos os microserviços através do **Spring Cloud Config Server**.
 
-## 🚀 Como Executar
+## 🛠️ Funcionalidades
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/spring-cloud-netflix.git
-   ```
+- Leitura de arquivos YAML ou Properties em um repositório Git.
+- Suporte a múltiplos perfis de ambiente (`dev`, `prod`).
+- Integração com Spring Cloud Bus (opcional) para atualização automática.
 
-2. Suba os serviços na seguinte ordem:
-   - `eureka-server`
-   - `config-server`
-   - `auth-server`
-   - `api-gateway`
-   - Demais microsserviços (clientes Eureka)
+## 🧭 Requisitos
 
-3. Acesse:
-   - Eureka: http://localhost:8761
-   - Gateway: http://localhost:8080
-   - Config Server: http://localhost:8888/{app-name}/{profile}
-   - Auth Server: http://localhost:9000
+- Java 17+
+- Spring Boot 3.1+
+- Maven 3.9+
+- Git ou GitHub com repositório de configurações
 
----
-
-## ⚠️ Importante
-
-> ⚠️ **1. O `auth-server` deve estar completamente fora da `api-gateway`.**  
-> Ele é um serviço de autenticação e não deve passar por filtros ou roteamento do gateway.
-
-> ⚠️ **2. O `auth-server` não deve ter nenhuma rota configurada no `api-gateway`.**  
-> Tokens devem ser emitidos diretamente e o tráfego do gateway deve usar esses tokens para validação, sem expor o servidor de autenticação.
-
-> ⚠️ **3. O `eureka-server` não precisa e não deve ter configurações de segurança.**  
-> Ele deve estar acessível internamente para todos os microsserviços e não deve ser exposto via `api-gateway`.
-
-## 🧱 Estrutura Recomendada
-
-```
-spring-cloud-netflix/
-├── eureka-server/
-├── config-server/
-├── auth-server/
-├── api-gateway/
-└── README.md
-```
-
----
-
-## 📌 Observações
-
-- Todos os microserviços devem incluir o `spring-cloud-starter-config`, `spring-cloud-starter-netflix-eureka-client` e autenticação via OAuth2.
-- Utilize `spring.profiles.active` para controlar ambientes.
-- Use o actuator e Spring Cloud Bus para recarregar configurações em tempo real.
-
----
-
-## 📖 Referências
-
-- [Spring Cloud Netflix Docs](https://spring.io/projects/spring-cloud-netflix)
-- [Spring Cloud Config](https://spring.io/projects/spring-cloud-config)
-- [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)
-- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
+Repositório: [config-server](https://github.com/marcellopedrosa/config-server)
