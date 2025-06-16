@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Debug Api Gateway",
+        "request": "launch",
+        "preLaunchTask": "mvnDebug",
+        "projectName": "api-gateway",
+        "mainClass": "br.com.csc.api_gateway.GatewayServerApplication",
+        "sourcePaths": [
+          "${workspaceFolder}/api-gateway/src/main/java",
+        ],
+        "postDebugTask": "terminate mvnDebug"
+      },
+      {
+        "type": "java",
+        "name": "Debug Eureka Server",
+        "request": "launch",
+        "preLaunchTask": "mvnDebug",
+        "projectName": "eureka-server",
+        "mainClass": "br.com.csc.eureka_server.EurekaServerApplication",
+        "sourcePaths": [
+          "${workspaceFolder}/eureka-server/src/main/java",
+        ],
+        "postDebugTask": "terminate mvnDebug"
+      }
+    ],
+    "compounds": []
+  }
