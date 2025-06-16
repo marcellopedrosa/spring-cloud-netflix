@@ -11,10 +11,10 @@ Este repositório organiza e referencia os principais projetos que compõem uma 
 
 ## 🔗 Ordem de inicialização recomendada
 
-- Eureka Server :8761
-- Config Server :8888
-- Auth Server :9000 (ou outras APIs)
-- Gateway Server :8080
+- Eureka Server: 8761
+- Config Server: 8888
+- Auth Server: 9000 (ou outras APIs)
+- Gateway Server: 8080
 
 Cada repositório contém sua própria documentação com instruções detalhadas de uso e configuração.
 
