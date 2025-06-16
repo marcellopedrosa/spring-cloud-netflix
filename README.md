@@ -4,10 +4,17 @@ Este repositório organiza e referencia os principais projetos que compõem uma 
 
 ## 🔗 Repositórios Individuais
 
-- 🔐 [Auth Server (OAuth2 / JWT)](https://github.com/marcellopedrosa/auth-server)
-- 🌐 [API Gateway (Spring Cloud Gateway)](https://github.com/marcellopedrosa/api-gateway)
 - 🧭 [Eureka Server (Service Discovery)](https://github.com/marcellopedrosa/eureka-server)
 - 🛠️ [Config Server (Centralização de Configs)](https://github.com/marcellopedrosa/config-server)
+- 🔐 [Auth Server (OAuth2 / JWT)](https://github.com/marcellopedrosa/auth-server)
+- 🌐 [API Gateway (Spring Cloud Gateway)](https://github.com/marcellopedrosa/api-gateway)
+
+## 🔗 Ordem de inicialização recomendada
+
+- Eureka Server :8761
+- Config Server :8888
+- Auth Server :9000 (ou outras APIs)
+- Gateway Server :8080
 
 Cada repositório contém sua própria documentação com instruções detalhadas de uso e configuração.
 
