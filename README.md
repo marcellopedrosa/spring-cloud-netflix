@@ -8,6 +8,7 @@ Este repositório organiza e referencia os principais projetos que compõem uma 
 - 🛠️ [Config Server (Centralização de Configs)](https://github.com/marcellopedrosa/config-server)
 - 🔐 [Auth Server (OAuth2 / JWT)](https://github.com/marcellopedrosa/auth-server)
 - 🌐 [API Gateway (Spring Cloud Gateway)](https://github.com/marcellopedrosa/api-gateway)
+- 📌 [Microserviço de Teste](https://github.com/marcellopedrosa/teste-service)
 
 ## 🔗 Ordem de inicialização recomendada
 
@@ -15,6 +16,7 @@ Este repositório organiza e referencia os principais projetos que compõem uma 
 - Config Server: 8888
 - Auth Server: 9000 (ou outras APIs)
 - Gateway Server: 8080
+- Teste Service: 8082
 
 Cada repositório contém sua própria documentação com instruções detalhadas de uso e configuração.
 
