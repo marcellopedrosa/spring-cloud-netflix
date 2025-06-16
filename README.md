@@ -2,19 +2,6 @@
 
 Este repositório fornece uma base sólida para iniciar projetos com microserviços usando **Spring Cloud Netflix**. Os módulos aqui apresentados implementam os componentes centrais de uma arquitetura distribuída: *Service Discovery*, *Centralized Configuration*, *API Gateway* e *Autenticação OAuth2*.
 
-## ⚠️ Alertas Críticos
-
-> ⚠️ **1. O `auth-server` deve estar completamente fora da `api-gateway`.**  
-> Ele é um serviço de autenticação e não deve passar por filtros ou roteamento do gateway.
-
-> ⚠️ **2. O `auth-server` não deve ter nenhuma rota configurada no `api-gateway`.**  
-> Tokens devem ser emitidos diretamente e o tráfego do gateway deve usar esses tokens para validação, sem expor o servidor de autenticação.
-
-> ⚠️ **3. O `eureka-server` não precisa e não deve ter configurações de segurança.**  
-> Ele deve estar acessível internamente para todos os microsserviços e não deve ser exposto via `api-gateway`.
-
----
-
 ## 📦 Módulos Inclusos
 
 ### 1. 🧭 eureka-server
@@ -182,6 +169,17 @@ spring:
    - Auth Server: http://localhost:9000
 
 ---
+
+## ⚠️ Importante
+
+> ⚠️ **1. O `auth-server` deve estar completamente fora da `api-gateway`.**  
+> Ele é um serviço de autenticação e não deve passar por filtros ou roteamento do gateway.
+
+> ⚠️ **2. O `auth-server` não deve ter nenhuma rota configurada no `api-gateway`.**  
+> Tokens devem ser emitidos diretamente e o tráfego do gateway deve usar esses tokens para validação, sem expor o servidor de autenticação.
+
+> ⚠️ **3. O `eureka-server` não precisa e não deve ter configurações de segurança.**  
+> Ele deve estar acessível internamente para todos os microsserviços e não deve ser exposto via `api-gateway`.
 
 ## 🧱 Estrutura Recomendada
 
