@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "mvnDebug",
+        "label": "mvnDebug-api-gateway",
         "type": "shell",
         "command": "cd ${workspaceFolder}/api-gateway; mvn clean compile; Write-Host 'Iniciando aplicação em modo debug...'; mvn spring-boot:run '-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005'",
         "isBackground": true,
@@ -23,7 +23,7 @@
         }
       },
       {
-        "label": "mvnDebug",
+        "label": "mvnDebug-eureka-server",
         "type": "shell",
         "command": "cd ${workspaceFolder}/eureka-server; mvn clean compile; Write-Host 'Iniciando aplicação em modo debug...'; mvn spring-boot:run '-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5006'",
         "isBackground": true,
