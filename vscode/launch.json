@@ -5,7 +5,7 @@
         "type": "java",
         "name": "Debug Api Gateway",
         "request": "launch",
-        "preLaunchTask": "mvnDebug",
+        "preLaunchTask": "mvnDebug-api-gateway",
         "projectName": "api-gateway",
         "mainClass": "br.com.csc.api_gateway.GatewayServerApplication",
         "sourcePaths": [
@@ -17,7 +17,7 @@
         "type": "java",
         "name": "Debug Eureka Server",
         "request": "launch",
-        "preLaunchTask": "mvnDebug",
+        "preLaunchTask": "mvnDebug-eureka-server",
         "projectName": "eureka-server",
         "mainClass": "br.com.csc.eureka_server.EurekaServerApplication",
         "sourcePaths": [
