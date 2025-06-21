@@ -16,7 +16,7 @@ Este repositório organiza e referencia os principais projetos que compõem uma 
 - Config Server: 8888
 - Auth Server: 9000 (ou outras APIs)
 - Gateway Server: 8080
-- Teste Service: 8082
+- Microserviço Teste Service: 8082
 
 Cada repositório contém sua própria documentação com instruções detalhadas de uso e configuração.
 
